@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter / editor artifacts
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# OS / temp
+Thumbs.db
+.DS_Store
+
+# Geo data / big binary outputs
+*.gpkg
+*.dbf
+*.shp
+*.shx
+*.cpg
+*.prj
+*.qmd
+*.jsonl
+*.geoparquet
+*.parquet
+*.tif
+*.shpz
+*.shm
+
+# Java tools and archives
+*.jar
+*.zip
+*.tar
+*.gz
+*.7z
+
+# Build / runtime artifacts
+*.log
+*.tmp
+*.bak
+*.cache
+
+# Analysis outputs
+*.html
+*.htm
+*.xlsx
+*.xls
+*.csv
+*.tsv
+*.geojson
+*.json
+
+# Large map / report outputs generated during runs
+map_*.html
