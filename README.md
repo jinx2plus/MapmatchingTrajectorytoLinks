@@ -1,19 +1,18 @@
-﻿# JB DTG Processing
+# JB DTG Processing
 
-占쏙옙 占쏙옙占쏙옙年占?DTG/占쏙옙占쏙옙 占쏙옙트占쏙옙크 占쏙옙占쏙옙占쏙옙 처占쏙옙, 占쏙옙占쏙옙, 占쏙옙占쏙옙 占시곤옙화 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙크占쏙옙트占쏙옙 占쏙옙占쏙옙求占?
+이 저장소는 DTG/교통망 데이터 처리, 집계, 지도 시각화 파이프라인을 제공하는 스크립트 모음입니다.
 
-## 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
+## 현재 폴더 구성
+- `processingDTGJB.py`: 핵심 처리 유틸리티 모듈
+- `processingDTGJB2.py`: `processingDTGJB`의 대체/개선 버전
+- `untitled1.py`, `untitled2.py`: DTG 처리 실행용 스크립트
+- `q3.py`, `q4.py`: 집계 및 후처리 실행 스크립트
+- `plot5.py`, `plot6.py`: 지도 시각화 스크립트
+- `JBROI.*`, `JBROI2.*`, `roi_box.gpkg`: ROI/지역 경계 데이터
+- `bfg-1.15.0.jar`: Git 큰 파일 제거용 도구
+- `scripts/`: 통합 실행 진입점
 
-- `processingDTGJB.py`: 占쌕쏙옙 처占쏙옙 占쏙옙틸 占쏙옙占?- `processingDTGJB2.py`: `processingDTGJB` 占식삼옙/占쏙옙체 占쏙옙占?- `untitled1.py`, `untitled2.py`: DTG 처占쏙옙 占쏙옙占쏙옙 占쏙옙크占쏙옙트
-- `q3.py`, `q4.py`: 占쏙옙占쏙옙/占쏙옙처占쏙옙 占쏙옙占쏙옙 占쏙옙크占쏙옙트
-- `plot5.py`, `plot6.py`: 占쏙옙占쏙옙 占시곤옙화 占쏙옙크占쏙옙트
-- `JBROI.*`, `JBROI2.*`, `roi_box.gpkg`: 占쏙옙占쏙옙/ROI 占쏙옙占쏙옙占쏙옙
-- `bfg-1.15.0.jar`: Git 占쏙옙占쏙옙占썰리 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
-- `scripts/`: 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
-
-## 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占?
-占쏙옙占싸울옙 占쏙옙占쏙옙占쏙옙(占쏙옙占쏙옙):
-
+## 실행 경로 추천
 - `python scripts/run_dtg_pipeline.py`
 - `python scripts/run_dtg_pipeline_alt.py`
 - `python scripts/run_q3.py`
@@ -21,8 +20,7 @@
 - `python scripts/plot_dtg_links.py`
 - `python scripts/plot_dtg_links_alt.py`
 
-占쏙옙占신쏙옙 占쏙옙占쏙옙 占쏙옙占?占쏙옙占쏙옙):
-
+## 기존 실행 경로
 - `python untitled2.py`
 - `python untitled1.py`
 - `python q3.py`
@@ -30,45 +28,39 @@
 - `python plot5.py`
 - `python plot6.py`
 
-占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙크占쏙옙트占쏙옙 占쌓댐옙占?占쏙옙占쏙옙占쌌니댐옙. 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙크占쏙옙트占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙체占싹몌옙 占싯니댐옙.
+## 변경 사유 및 운영 방식
+- 새 진입점으로 기존의 레거시 스크립트를 호출합니다.
+- 기존 스크립트는 점진적으로 정리하면서 경로 관리와 실행 옵션을 통일해가고 있습니다.
 
-## 占쏙옙占쏙옙 占쌔븝옙
-
-1. Python 占쏙옙키占쏙옙 占쏙옙치
+## 설치 및 환경 설정
+1. Python 패키지 설치
    ```bash
    pip install -r requirements.txt
    ```
-2. 占쏙옙크占쏙옙트 占쏙옙 占싹듸옙占쌘듸옙占쏙옙 占쌉뤄옙 占쏙옙占?占쏙옙: `/data1/...`, DB 占쏙옙占쏙옙 占쏙옙占쏙옙)占쏙옙 환占썸에 占승곤옙 占쏙옙占쏙옙
-3. 큰 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 Git 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙都求占? 占쏙옙占?환占썸에占쏙옙 占쏙옙寬占?占쏙옙효占쏙옙占쏙옙 확占쏙옙
+2. 스크립트 내부의 하드코딩 경로(예: `/data1/...`)와 DB 연결 정보를 실제 환경에 맞게 수정하세요.
+3. Git에는 대용량 데이터/바이너리를 포함하지 않으므로, 로컬 환경의 `data/`, `tools/` 경로가 유효한지 확인하세요.
 
-## 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
+## 정리 예정 항목
+- 데이터/도구 파일을 `data/`, `tools/`로 분리해 보관하기
+- `scripts/`에서 `argparse` 기반 공통 인터페이스 정비하기
+- 환경별 경로를 `.env` 또는 별도 설정 파일로 분리하기
 
-- 占쏙옙占쏙옙占쏙옙/占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 `data/`, `tools/`占쏙옙 占쏙옙占쏙옙 占싱듸옙
-- 占쏙옙占쏙옙 占쌉쇽옙 占쏙옙占쏙옙占쏙옙 占쏙옙占싫?옙構占? `scripts/` 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 `argparse`占쏙옙 占심쇽옙 占쏙옙占쏙옙
-- 환占썸별 占쏙옙灌占?`.env` 占실댐옙 占쏙옙占쏙옙 占쏙옙占싹뤄옙 占싻몌옙
+## 통합 CLI 실행
+- `python scripts/cli.py pipeline`
+- `python scripts/cli.py pipeline-alt`
+- `python scripts/cli.py q3`
+- `python scripts/cli.py q4`
+- `python scripts/cli.py plot`
+- `python scripts/cli.py plot-alt`
 
-## 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
-
-- 占쌕쏙옙 占쌘듸옙 占쏙옙占쏙옙占쏙옙 占싣뤄옙 占쏙옙占쏙옙占쏙옙占?占쏙옙占쏙옙
-  - `python scripts/cli.py pipeline`
-  - `python scripts/cli.py pipeline-alt`
-  - `python scripts/cli.py q3`
-  - `python scripts/cli.py q4`
-  - `python scripts/cli.py plot`
-  - `python scripts/cli.py plot-alt`
-
-## 占쏙옙티占쏙옙트 占쏙옙占쏙옙(占쏙옙占쏙옙 占쌥울옙占쏙옙)
-
-- 占쏙옙占쏙옙 占쏙옙占싱너몌옙/占쏙옙占쏙옙占싶댐옙 占쏙옙占쏙옙 占쏙옙管占?占싻몌옙
-
+## 산출물 구성(현재 반영)
+- 큰 바이너리/데이터 분리
   - `data/` : `JBROI*`, `roi_box.gpkg`
   - `tools/` : `bfg-1.15.0.jar`
-- 占쏙옙占쏙옙 占쏙옙크占쏙옙트占쏙옙 占쏙옙占쏙옙 占쏙옙占?占쌘듸옙 占쌔삼옙(`project_paths.py`)占쏙옙 `data/`占쏙옙 占쎌선 탐占쏙옙占싹듸옙占쏙옙 占쏙옙占쏙옙占쏙옙
-
+- 데이터 경로 로더는 `project_paths.py`를 통해 `data/` 기준으로 해결됩니다.
 
 
 ![alt text](20260215_042620.png)
-
 ## English Translation
 
 This repository contains scripts for DTG/traffic network data processing, aggregation, and map visualization pipelines.
