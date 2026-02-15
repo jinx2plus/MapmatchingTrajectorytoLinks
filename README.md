@@ -1,6 +1,30 @@
-# JB DTG Processing
+A Study on the Effectiveness Analysis of Rest Areas Using Continuous Driving Time Variable
+(연속운전 데이터를 활용한 졸음쉼터 효과분석)
+이 저장소는 **한국교통안전공단(KOTSA)**의 의뢰를 받아 수행한 화물차 연속운전 데이터 분석 및 졸음쉼터 입지 효과 분석을 위한 파이프라인을 포함하고 있습니다.
+This repository contains a data processing pipeline for analyzing truck continuous driving data and the effectiveness of rest area locations, commissioned by the Korea Transportation Safety Authority (TSAT), a national public agency under the Ministry of Land, Infrastructure and Transport of the Republic of Korea.
+ - DTG/교통망 데이터 처리, 집계, 지도 시각화 파이프라인을 제공하는 스크립트 모음입니다.
+📊 Analysis Overview (분석 개요)
+1. Data Collection & Processing (데이터 수집 및 가공)
+Target Area: All road links in Jeollabuk-do, South Korea (Total 4,948 links)
 
-이 저장소는 DTG/교통망 데이터 처리, 집계, 지도 시각화 파이프라인을 제공하는 스크립트 모음입니다.
+Period: March 2025 – August 2025 (6 months)
+
+Data Source: Truck Digital Tachograph (DTG) data, including GPS coordinates, vehicle IDs, and driving timestamps
+
+Methodology: Extracted continuous driving durations per vehicle and matched them to spatial road network links
+
+2. Key Statistics (주요 통계)
+Traffic Volume: Max 413,661 trucks per link (Avg. 24,513)
+
+Long-duration Driving (>2 hours): Max 29,586 vehicles (59.7% of link traffic), Avg. 2,233 vehicles (11.5%)
+
+Extreme-duration Driving (>2.5 hours): Max 11,691 vehicles (53.5%), Avg. 1,100 vehicles (7.16%)
+
+🗺️ Visualization Results (시각화 결과)
+1. Regional Traffic Density (권역별 교통량 시각화)
+High-Traffic Route: National Route 21, passing through Gunsan, Iksan, and Jeonju, showed the highest truck traffic volume
+
+Critical Link: The road link in Oksan-myeon, Gunsan-si, was identified as the segment with the highest frequency of continuous driving exceeding the safety threshold
 
 ## 현재 폴더 구성
 - `processingDTGJB.py`: 핵심 처리 유틸리티 모듈
@@ -122,3 +146,8 @@ The new entry points execute the existing legacy scripts directly. In later vers
   - `data/`: `JBROI*`, `roi_box.gpkg`
   - `tools/`: `bfg-1.15.0.jar`
 - Existing scripts were updated to use `project_paths.py`, which now resolves data files with `data/` prioritized automatically.
+
+🏛️ Acknowledgement
+This project was developed for the Korea Transportation Safety Authority (TSAT). As a national public agency, TSAT focuses on enhancing road safety and reducing traffic accidents through data-driven research.
+
+본 프로젝트는 국토교통부 산하 국가공공기관인 한국교통안전공단의 데이터를 바탕으로 수행되었습니다.
