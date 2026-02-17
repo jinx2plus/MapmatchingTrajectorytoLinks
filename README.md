@@ -5,11 +5,16 @@ This repository contains a data processing pipeline for analyzing truck continuo
 
 📊 Analysis Overview (분석 개요)
 1. Data Collection & Processing (데이터 수집 및 가공)
-Target Area: All road links in Jeollabuk-do, South Korea (Total 4,948 links)
+Target Area: Standard road network links corresponding to National Highways 
+(General National Roads) within Jeollabuk-do
 
 Period: March 2025 – August 2025 (6 months)
 
 Data Source: Truck Digital Tachograph (DTG) data, including GPS coordinates, vehicle IDs, and driving timestamps
+
+Data column configuration:
+ - 칼럼순서: 운행일자	운행시분초	차량번호	업종	GPSX	GPSY
+ - column order: date	 time	carid	V_TYPE	lon	lat
 
 Methodology: Extracted continuous driving durations per vehicle and matched them to spatial road network links
 
