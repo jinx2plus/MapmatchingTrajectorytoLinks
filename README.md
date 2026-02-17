@@ -1,6 +1,6 @@
 A Study on the Effectiveness Analysis of Rest Areas Using Continuous Driving Time Variable
 (연속운전 데이터를 활용한 졸음쉼터 효과분석)
-이 저장소는 **한국교통안전공단(KOTSA)**의 의뢰를 받아 수행한 화물차 연속운전 데이터 분석 및 졸음쉼터 입지 효과 분석을 위한 파이프라인을 포함하고 있습니다.
+이 저장소는 **한국교통안전공단(KOTSA)**의 의뢰를 받아 수행한 "화물차 연속운전 데이터 분석 및 졸음쉼터 입지 효과 분석"을 위한 파이프라인을 포함하고 있습니다.
 This repository contains a data processing pipeline for analyzing truck continuous driving data and the effectiveness of rest area locations, commissioned by the Korea Transportation Safety Authority (TSAT), a national public agency under the Ministry of Land, Infrastructure and Transport of the Republic of Korea.
 
 📊 Analysis Overview (분석 개요)
