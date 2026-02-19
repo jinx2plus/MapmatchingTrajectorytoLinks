@@ -20,19 +20,19 @@ Methodology: Extracted continuous driving durations and trips per vehicle and ma
  - 차량번호를 이용한 trip 생성 시, 데이터 탐색 : EDA for making trips using Carid.
  - 다음 그림은 특정차량(차량번호: 4347)이 20250331에 주행한 궤적을 나타냄. 오전 9시33분경부터 위경도값 측정에 오류가 있는 것으로 추정됨
 
-![image.png](attachment:f818459c-8843-4ae9-9dba-fb98bff2725b:image.png)
+![alt text](attachment:f818459c-8843-4ae9-9dba-fb98bff2725b:image.png)
 
  - 다음 그림은 정차한 것으로 추정되는 주행궤적을 제거한 것을 나타냄(적색 point 는 제거 대상)
  - 15분이상 250m 반경 내에서 5km/h 이하의 속도를 나타내고 있거나 20km/h 이하의 속도를 나타내는 point를 군집화하여 제거함
-![image.png](attachment:c4efa29c-4515-4c15-a644-3fcbe7c93388:image.png)
+![alt text](attachment:c4efa29c-4515-4c15-a644-3fcbe7c93388:image.png)
 
  - 다음 그림은 전체 데이터 일부를 plotting 하였을 때, 새만금 구간의 일부 도로 구역(노란색 칠해진 링크)은 데이터가 없는 상황
 
-![image.png](attachment:d4ffde21-948f-437f-8b40-e4f6808e1d73:image.png)
+![alt text](attachment:d4ffde21-948f-437f-8b40-e4f6808e1d73:image.png)
 
  - 다음 그림은 새만금 구간의 일부 도로 구역(노란색 칠해진 링크)을 통과하는 것으로 추정되는데 주행궤적이 기록되지 않은 현황
 
-![image.png](attachment:c30f1c73-8b2f-4381-9ba1-83646b1833d1:image.png)
+![alt text](attachment:c30f1c73-8b2f-4381-9ba1-83646b1833d1:image.png)
 
 2. Key Statistics (주요 통계)
 Traffic Volume: Max 413,661 trucks per link (Avg. 24,513)
