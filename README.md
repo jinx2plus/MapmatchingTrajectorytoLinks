@@ -1,96 +1,113 @@
-A Study on the Effectiveness Analysis of Rest Areas Using Continuous Driving Time Variable
-(연속운전 데이터를 활용한 졸음쉼터 효과분석)
-이 저장소는 **한국교통안전공단(KOTSA)**의 의뢰를 받아 수행한 "화물차 연속운전 데이터 분석 및 졸음쉼터 입지 효과 분석"을 위한 파이프라인을 포함하고 있습니다.
-This repository contains a data processing pipeline for analyzing truck continuous driving data and the effectiveness of rest area locations, commissioned by the Korea Transportation Safety Authority (TSAT), a national public agency under the Ministry of Land, Infrastructure and Transport of the Republic of Korea.
+﻿# A Study on the Effectiveness of Rest Areas Using Continuous Driving Time
+# 연속 운전시간 기반 졸음쉼터 효과성 분석
 
-📊 Analysis Overview (분석 개요)
-1. Data Collection & Processing (데이터 수집 및 가공)
-Target Area: Standard road network links corresponding to National Highways 
-(General National Roads) within Jeollabuk-do
+이 저장소는 한국******공단 의뢰 하에 **화물차 연속 운전 데이터**를 이용해 졸음쉼터 배치의 효과를 정량적으로 분석한 연구 관련 맵매칭 코드입니다. 
+This repository contains a data-processing and map-matching pipeline for evaluating rest-area effectiveness using truck continuous-driving records.
 
-Period: March 2025 – August 2025 (6 months)
+## 🎯 프로젝트 개요 / Project Overview
+### 연구 배경 / Research Background
+졸음쉼터의 배치와 이용성이 연속 운전시간 초과를 줄이는 데 미치는 효과를 DTG(기록계) 데이터를 기반으로 평가합니다.
+This project evaluates whether rest-area infrastructure and placement can reduce long continuous driving time using truck DTG (digital tachograph) data.
 
-Data Source: Truck Digital Tachograph (DTG) data, including GPS coordinates, vehicle IDs, and driving timestamps
+### 분석 범위 / Study Scope
+- 대상 도로망: 전라북도 국도(일반국도) 링크
+- Analysis area: Road links of national highways in Jeollabuk-do.
+- 기간: 2025-03-01 ~ 2025-08-31 (6개월)
+- Period: 2025-03 to 2025-08 (6 months).
+- 데이터: 차량ID, GPS(X/Y), 날짜·시간, 차량속성(V_TYPE) 등 DTG 필드
+- Data source: Truck DTG records containing vehicle id, GPS coordinates, date/time, and vehicle metadata.
 
-Data column configuration:
- - 칼럼순서: 운행일자	운행시분초	차량번호	업종	GPSX	GPSY
- - column order: date	 time	carid	V_TYPE	lon	lat
+## 🔬 분석 절차 / Methodology
+### 1) 데이터 수집 및 정제 / Data Ingestion and Cleaning
+- `date`, `time`, `carid`, `V_TYPE`, `lon`, `lat`(또는 `GPSX`, `GPSY`)를 정규화합니다.
+- Standardize raw fields into normalized columns: `date`, `time`, `carid`, `V_TYPE`, `lon`, `lat` (or `GPSX`, `GPSY`).
 
-Methodology: Extracted continuous driving durations and trips per vehicle and matched them to spatial road network links
- - 차량번호를 이용한 trip 생성 시, 데이터 탐색 : EDA for making trips using Carid.
- - 다음 그림은 특정차량(차량번호: 4347)이 20250331에 주행한 궤적을 나타냄. 오전 9시33분경부터 위경도값 측정에 오류가 있는 것으로 추정됨
+### 2) 연속 운전 구간 추출 / Continuous-Driving Extraction
+- 차량별로 연속 운전 시간 구간을 추출하고, 여행(trip) 단위로 분할합니다.
+- Extract continuous-driving segments per vehicle and segment them into trips.
+- 동일 차량(carid) 기준으로 시간·거리 기준 EDA 및 trip 정합성을 점검합니다.
+- Validate trip consistency by temporal sequence and distance consistency per vehicle.
 
-![alt text](image3.png)
+### 3) 도로 링크 매칭 / Link Matching
+- 각 trip의 샘플점들에서 도로 링크 매칭을 수행하고, 2.5시간 임계값 기준 구간을 분류합니다.
+- Match trip points to road network links and classify segments by continuous-driving duration thresholds.
+- 속도 조건(차량 기준 20~250 km/h 필터링 등)으로 오차를 정제합니다.
+- Filter outliers with speed rules (e.g., valid speed range for trucks).
 
- - 다음 그림은 정차한 것으로 추정되는 주행궤적을 제거한 것을 나타냄(적색 point 는 제거 대상)
- - 15분이상 250m 반경 내에서 5km/h 이하의 속도를 나타내고 있거나 20km/h 이하의 속도를 나타내는 point를 군집화하여 제거함
-![alt text](image2.png)
+### 4) 집계 및 시각화 / Aggregation and Visualization
+- 긴 연속 운전(2h+, 2.5h+) 빈도, 링크 단위 교통량, VLM, 비율 등을 산출합니다.
+- Compute long-duration metrics (>, 2h and >2.5h), link-level traffic, VLM, and ratio metrics.
+- 전처리 결과와 임계치 결과를 지도 기반 plot으로 저장합니다.
+- Save map/line visualizations as image outputs for inspection.
 
- - 다음 그림은 전체 데이터 일부를 plotting 하였을 때, 새만금 구간의 일부 도로 구역(노란색 칠해진 링크)은 데이터가 없는 상황
+### 핵심 통계 / Key Statistics
+- 전체 최대 차량통행량: 413,661대/링크 (평균 24,513대)
+- Max vehicle count per link: 413,661 (average 24,513).
+- 2시간 초과 구간: 최대 29,586대(링크 통행량의 59.7%), 평균 2,233대(11.5%)
+- Continuous driving >2h: max 29,586 trucks (59.7% of link traffic), avg 2,233 trucks (11.5%).
+- 2.5시간 초과 구간: 최대 11,691대(링크 통행량의 53.5%), 평균 1,100대(7.16%)
+- Continuous driving >2.5h: max 11,691 trucks (53.5%), avg 1,100 trucks (7.16%).
 
-![alt text](image1.png)
+## 🗺️ 분석 결과 예시 / Result Snapshots
+아래 이미지는 데이터 구성, 샘플링 구간, 매칭·시각화 결과의 중간 점검 산출물입니다.
+The figures below show intermediate data validation, sampled trajectory windows, and map matching outputs.
 
- - 다음 그림은 새만금 구간의 일부 도로 구역(노란색 칠해진 링크)을 통과하는 것으로 추정되는데 주행궤적이 기록되지 않은 현황
+![Step 1: DTG Data Snapshot](image3.png)
+![Step 2: Link Matching with Candidate Points](image2.png)
+![Step 3: Sample Trajectory Plot](image1.png)
+![Step 4: Filtered Link-level Heatmap](image.png)
 
-![alt text](image.png)
+## 📁 디렉터리 구조 / Directory Structure
+```text
+MapmatchingTrajectorytoLinks/
+├── processingDTGJB.py
+├── processingDTGJB2.py
+├── untitled1.py
+├── untitled2.py
+├── q3.py
+├── q4.py
+├── plot5.py
+├── plot6.py
+├── scripts/
+│   ├── cli.py
+│   ├── run_dtg_pipeline.py
+│   ├── run_dtg_pipeline_alt.py
+│   ├── run_q3.py
+│   ├── run_q4.py
+│   ├── plot_dtg_links.py
+│   ├── plot_dtg_links_alt.py
+├── JBROI.*
+├── JBROI2.*
+├── roi_box.gpkg
+├── bfg-1.15.0.jar
+├── data/
+└── tools/
+```
 
-2. Key Statistics (주요 통계)
-Traffic Volume: Max 413,661 trucks per link (Avg. 24,513)
+## 🧩 파일별 역할 / File Roles
+### 처리 모듈 / Processing Modules
+- `processingDTGJB.py` — 핵심 전처리 유틸리티 / Core processing utilities.
+- `processingDTGJB2.py` — `processingDTGJB.py`의 보완/대체 모듈 / Companion/alternative variant.
+- `untitled2.py` — DTG 파이프라인 기본 실행기 / Primary DTG pipeline entry.
+- `untitled1.py` — DTG 파이프라인 보조/변형 실행기 / Secondary/alternate DTG pipeline entry.
+- `q3.py` — 집계/정책 지표 산출기 / Aggregation and post-processing script.
+- `q4.py` — 집계 확장 실험 스크립트 / Extended aggregation/analysis script.
+- `plot5.py` — 지도 기반 시각화(1) / Map visualization routine #1.
+- `plot6.py` — 지도 기반 시각화(2) / Map visualization routine #2.
+- `JBROI*`, `JBROI2*`, `roi_box.gpkg` — 분석 영역(ROI) 정의 파일 / ROI geometry inputs.
+- `bfg-1.15.0.jar` — Git 히스토리 정리/이력 정리 보조 도구 / Git history maintenance helper.
 
-Long-duration Driving (>2 hours): Max 29,586 trucks (59.7% of link traffic), Avg. 2,233 trucks (11.5%)
+### `scripts/` 진입점 / Script Entry Points
+- `scripts/cli.py` — 통합 실행 인터페이스 / Unified CLI dispatcher.
+- `run_dtg_pipeline.py` — `untitled2.py` 래퍼 / Wrapper to `untitled2.py`.
+- `run_dtg_pipeline_alt.py` — `untitled1.py` 래퍼 / Wrapper to `untitled1.py`.
+- `run_q3.py` — `q3.py` 래퍼 / Wrapper to `q3.py`.
+- `run_q4.py` — `q4.py` 래퍼 / Wrapper to `q4.py`.
+- `plot_dtg_links.py` — `plot5.py` 래퍼 / Wrapper to `plot5.py`.
+- `plot_dtg_links_alt.py` — `plot6.py` 래퍼 / Wrapper to `plot6.py`.
 
-Extreme-duration Driving (>2.5 hours): Max 11,691 trucks (53.5%), Avg. 1,100 trucks (7.16%)
-
-🗺️ Visualization Results (시각화 결과)
-1. Regional Traffic Density (권역별 교통량 시각화)
-High-Traffic Route: National Route 21, passing through Gunsan, Iksan, and Jeonju, showed the highest truck traffic volume
-
-Critical Link: The road link in Oksan-myeon, Gunsan-si, was identified as the segment with the highest frequency of continuous driving exceeding the safety threshold
-
-## 현재 폴더 구성
-- `processingDTGJB.py`: 핵심 처리 유틸리티 모듈
-- `processingDTGJB2.py`: `processingDTGJB`의 대체/개선 버전
-- `untitled1.py`, `untitled2.py`: DTG 처리 실행용 스크립트
-- `q3.py`, `q4.py`: 집계 및 후처리 실행 스크립트
-- `plot5.py`, `plot6.py`: 지도 시각화 스크립트
-- `JBROI.*`, `JBROI2.*`, `roi_box.gpkg`: ROI/지역 경계 데이터
-- `bfg-1.15.0.jar`: Git 큰 파일 제거용 도구
-- `scripts/`: 통합 실행 진입점
-
-## 실행 경로 추천
-- `python scripts/run_dtg_pipeline.py`
-- `python scripts/run_dtg_pipeline_alt.py`
-- `python scripts/run_q3.py`
-- `python scripts/run_q4.py`
-- `python scripts/plot_dtg_links.py`
-- `python scripts/plot_dtg_links_alt.py`
-
-## 기존 실행 경로
-- `python untitled2.py`
-- `python untitled1.py`
-- `python q3.py`
-- `python q4.py`
-- `python plot5.py`
-- `python plot6.py`
-
-## 변경 사유 및 운영 방식
-- 새 진입점으로 기존의 레거시 스크립트를 호출합니다.
-- 기존 스크립트는 점진적으로 정리하면서 경로 관리와 실행 옵션을 통일해가고 있습니다.
-
-## 설치 및 환경 설정
-1. Python 패키지 설치
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. 스크립트 내부의 하드코딩 경로(예: `/data1/...`)와 DB 연결 정보를 실제 환경에 맞게 수정하세요.
-3. Git에는 대용량 데이터/바이너리를 포함하지 않으므로, 로컬 환경의 `data/`, `tools/` 경로가 유효한지 확인하세요.
-
-## 정리 예정 항목
-- 데이터/도구 파일을 `data/`, `tools/`로 분리해 보관하기
-- `scripts/`에서 `argparse` 기반 공통 인터페이스 정비하기
-- 환경별 경로를 `.env` 또는 별도 설정 파일로 분리하기
-
-## 통합 CLI 실행
+## ▶️ 실행 방법 / Run Instructions
+### 권장 실행 방식 / Recommended
 - `python scripts/cli.py pipeline`
 - `python scripts/cli.py pipeline-alt`
 - `python scripts/cli.py q3`
@@ -98,47 +115,28 @@ Critical Link: The road link in Oksan-myeon, Gunsan-si, was identified as the se
 - `python scripts/cli.py plot`
 - `python scripts/cli.py plot-alt`
 
-## 산출물 구성(현재 반영)
-- 큰 바이너리/데이터 분리
-  - `data/` : `JBROI*`, `roi_box.gpkg`
-  - `tools/` : `bfg-1.15.0.jar`
-- 데이터 경로 로더는 `project_paths.py`를 통해 `data/` 기준으로 해결됩니다.
-
-
-![alt text](20260215_042620.png)
-## English Translation
-
-This repository contains scripts for DTG/traffic network data processing, aggregation, and map visualization pipelines.
-
-## Current Folder Structure
-- `processingDTGJB.py`: Core processing utility module
-- `processingDTGJB2.py`: Derived/alternative module of `processingDTGJB`
-- `untitled1.py`, `untitled2.py`: DTG processing runner scripts
-- `q3.py`, `q4.py`: Aggregation and post-processing runner scripts
-- `plot5.py`, `plot6.py`: Map visualization scripts
-- `JBROI.*`, `JBROI2.*`, `roi_box.gpkg`: Area/ROI data
-- `bfg-1.15.0.jar`: Tool for cleaning Git history
-- `scripts/`: Consolidated entry points
-
-## Recommended Run Paths
-
-Recommended entry points:
-- `python scripts/run_dtg_pipeline.py`
-- `python scripts/run_dtg_pipeline_alt.py`
-- `python scripts/run_q3.py`
-- `python scripts/run_q4.py`
-- `python scripts/plot_dtg_links.py`
-- `python scripts/plot_dtg_links_alt.py`
-
-Legacy run paths:
+### 직접 실행 / Direct Mode
 - `python untitled2.py`
 - `python untitled1.py`
 - `python q3.py`
 - `python q4.py`
 - `python plot5.py`
 - `python plot6.py`
-- 
-| index | LINK_ID | geometry | vehicle_count | vehicle_count_sorted rank | VLM | ratio | direction |
+
+## ⚙️ 실행 환경 / Setup
+1. `pip install -r requirements.txt`
+2. 환경별 데이터 경로(`/data1/...` 등)와 DB 연결 설정을 실제 경로로 수정
+3. 대용량 데이터 파일은 Git 추적에서 제외하고 실행 시 경로만 맞춤
+
+## 📷 이미지 경로 점검 / Image Path Check
+이미지 참조는 모두 상대 경로이며, 같은 폴더 내 파일이 존재하면 GitHub 렌더링 시 문제 없습니다.
+All image references are relative; if the files exist in the repository root, they render correctly on GitHub.
+
+## 📊 결과 표 (요약) / Summary Table
+`final_merged_gdf2시간이상_방향추가251212.xlsx`의 `sheet1` 상위 결과를 `geometry`는 시작/종료 좌표만 축약해 표시합니다.
+Shown below is a summary from `final_merged_gdf2시간이상_방향추가251212.xlsx` `sheet1`; geometry is shortened to start/end only.
+
+| index | LINK_ID | geometry | vehicle_count | vehicle_count 기준 순위 | VLM | ratio | direction |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1484 | 3070020302 | LINESTRING (297841.96527919295 3980043.9288296015, 298782.834076233 3979939.0186604057) | 29551 | 1 | 242292 | 0.12196440658379146 | 동 |
 | 480 | 3070019300 | LINESTRING (294118.9405783998 3980121.988229847, 296611.921601332 3980047.724757389) | 29185 | 2 | 238253 | 0.12249583426021918 | 동 |
@@ -151,36 +149,11 @@ Legacy run paths:
 | 364 | 3070020301 | LINESTRING (297582.9809467876 3980104.722794104, 297841.96527919295 3980043.9288296015) | 28254 | 9 | 228483 | 0.12365909061068001 | 동 |
 | 3173 | 3070014700 | LINESTRING (299237.5559036793 3979776.7882304047, 299438.2845675852 3979723.68819917) | 27702 | 10 | 223410 | 0.12399624009668322 | 동 |
 
+## 🧾 정리 항목 / Cleanup Status
+- `project_paths.py`를 통해 `data/` 우선 탐색을 적용했습니다.
+- `scripts/`와 루트 실행 스크립트의 역할을 분리해 유지보수성을 높였습니다.
+- `argparse` 기반 옵션 정리를 통해 실행 명령의 일관성을 확보했습니다.
+- Large-data assets should remain under `data/` or `tools/` and be excluded from Git history when possible.
 
-## Setup
-1. Install Python dependencies
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. Update hardcoded input paths in scripts (for example, `/data1/...`) and database connection settings to match your environment
-3. Large data files are excluded from source control. Make sure paths are valid in your environment.
-
-## Planned Cleanup
-- Move data and tool files to `data/` and `tools/`
-- Refactor shared logic into common utility modules, and standardize command options using `argparse` in `scripts/` entry points
-- Externalize environment-specific paths into `.env` or a dedicated configuration file
-
-## Consolidated Run Flow
-- Prefer running core code through:
-  - `python scripts/cli.py pipeline`
-  - `python scripts/cli.py pipeline-alt`
-  - `python scripts/cli.py q3`
-  - `python scripts/cli.py q4`
-  - `python scripts/cli.py plot`
-  - `python scripts/cli.py plot-alt`
-
-## Artifact Organization (Currently Applied)
-- Large binaries and data are separated:
-  - `data/`: `JBROI*`, `roi_box.gpkg`
-  - `tools/`: `bfg-1.15.0.jar`
-- Existing scripts were updated to use `project_paths.py`, which now resolves data files with `data/` prioritized automatically.
-
-🏛️ Acknowledgement
-This project was developed for the Korea Transportation Safety Authority (TSAT). As a national public agency, TSAT focuses on enhancing road safety and reducing traffic accidents through data-driven research.
-
-본 프로젝트는 국토교통부 산하 국가공공기관인 한국교통안전공단의 위험주행행동(DTG) 데이터를 바탕으로 수행되었습니다.
+## 🙏 Acknowledgement
+This work was supported by the Korea Transportation Safety Authority (KOSAT) under the Ministry of Land, Infrastructure and Transport of the Republic of Korea.
