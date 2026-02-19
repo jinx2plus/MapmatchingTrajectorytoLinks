@@ -138,7 +138,7 @@ Legacy run paths:
 - `python plot5.py`
 - `python plot6.py`
 - 
-| index | LINK_ID | geometry | vehicle_count | vehicle_count 기준 순위 | VLM | ratio | 방향 |
+| index | LINK_ID | geometry | vehicle_count | vehicle_count_sorted rank | VLM | ratio | direction |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1484 | 3070020302 | LINESTRING (297841.96527919295 3980043.9288296015, 298782.834076233 3979939.0186604057) | 29551 | 1 | 242292 | 0.12196440658379146 | 동 |
 | 480 | 3070019300 | LINESTRING (294118.9405783998 3980121.988229847, 296611.921601332 3980047.724757389) | 29185 | 2 | 238253 | 0.12249583426021918 | 동 |
@@ -150,7 +150,7 @@ Legacy run paths:
 | 1562 | 3070022700 | LINESTRING (297226.72092121094 3980160.699836365, 297582.9809467876 3980104.722794104) | 28257 | 8 | 229146 | 0.12331439344348145 | 동 |
 | 364 | 3070020301 | LINESTRING (297582.9809467876 3980104.722794104, 297841.96527919295 3980043.9288296015) | 28254 | 9 | 228483 | 0.12365909061068001 | 동 |
 | 3173 | 3070014700 | LINESTRING (299237.5559036793 3979776.7882304047, 299438.2845675852 3979723.68819917) | 27702 | 10 | 223410 | 0.12399624009668322 | 동 |
-The new entry points execute the existing legacy scripts directly. In later versions, you can gradually replace only the underlying target script files referenced by each entry point.
+
 
 ## Setup
 1. Install Python dependencies
