@@ -33,7 +33,8 @@ This project evaluates whether rest-area infrastructure and placement can reduce
 - Match trip points to road network links and classify segments by continuous-driving duration thresholds.
 - 속도 조건(차량 기준 20~250 km/h 필터링 등)으로 오차를 정제합니다.
 - Filter outliers with speed rules (e.g., valid speed range for trucks).
-
+- !!To make it fast!!Refactored to a Class-based structure to encapsulate the Spatial Index (STRtree), reducing redundant index-building time and improving memory scope management.
+  
 ### 4) 집계 및 시각화 / Aggregation and Visualization
 - 긴 연속 운전(2h+, 2.5h+) 빈도, 링크 단위 교통량, VLM, 비율 등을 산출합니다.
 - Compute long-duration metrics (>, 2h and >2.5h), link-level traffic, VLM, and ratio metrics.
