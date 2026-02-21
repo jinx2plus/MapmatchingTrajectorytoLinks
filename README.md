@@ -137,7 +137,7 @@ All image references are relative; if the files exist in the repository root, th
 `final_merged_gdf2시간이상_방향추가251212.xlsx`의 `sheet1` 상위 결과를 `geometry`는 시작/종료 좌표만 축약해 표시합니다.
 Shown below is a summary from `final_merged_gdf2시간이상_방향추가251212.xlsx` `sheet1`; geometry is shortened to start/end only.
 
-| index | LINK_ID | geometry | vehicle_count | vehicle_count 기준 순위 | VLM | ratio | direction |
+| index | LINK_ID | geometry | vehicle_count 2시간 이상 연속주행차량(대수) | vehicle_count 기준 순위 | VLM 교통량 | ratio 2시간 이상 연속주행차량 비율| direction 주행방향 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1484 | 3070020302 | LINESTRING (297841.96527919295 3980043.9288296015, 298782.834076233 3979939.0186604057) | 29551 | 1 | 242292 | 12.20%| 동 |
 | 480 | 3070019300 | LINESTRING (294118.9405783998 3980121.988229847, 296611.921601332 3980047.724757389) | 29185 | 2 | 238253 | 12.25%| 동 |
