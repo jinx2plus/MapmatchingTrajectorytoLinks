@@ -1,19 +1,71 @@
 ﻿# A Study on the Effectiveness of Rest Areas Using Continuous Driving Time
-# 연속 운전시간 기반 졸음쉼터 효과성 분석
+# 대용량 모빌리티 데이터용 맵매칭 엔진: 연속 운전시간 기반 졸음쉼터 효과성 분석
 
-이 저장소는 한국******공단 의뢰 하에 **화물차 연속 운전 데이터**를 이용해 졸음쉼터 배치의 효과를 정량적으로 분석한 연구 관련 맵매칭 코드입니다. 
+이 저장소는 한국******공단 의뢰 하에 **화물차 연속 운전 데이터**를 이용해 졸음쉼터 배치의 효과를 정량적으로 분석한 연구 관련 맵매칭 코드입니다. 본 레포지토리는 대규모 GPS 궤적 데이터를 표준 노드-링크 체계에 정합하는  
+실무 지향적 맵매칭(Map-Matching) 파이프라인을 구현한 프로젝트입니다.
+공공 MaaS, DRT(수요응답형 교통), 교통 분석 플랫폼에 적용 가능한  
+확장형 공간 데이터 처리 구조를 목표로 설계되었습니다.
 This repository contains a data-processing and map-matching pipeline for evaluating rest-area effectiveness using truck continuous-driving records.
 
-# Mobility Map-Matching Engine
-Production-oriented GPS-to-Link Map-Matching pipeline for large-scale mobility datasets.
+## 🚀 60초 안에 확인할 수 있는 핵심 역량
 
-## What You Can Evaluate in 60 Seconds
-- Scalable spatial processing workflow
-- PostGIS-ready structure
-- Algorithmic design for trajectory-link matching
-- Mobility domain-specific validation logic
+- 대규모 궤적 데이터 처리 파이프라인 설계
+- 공간 인덱싱 기반 성능 최적화 구조
+- 교통공학 제약 조건을 반영한 매칭 알고리즘
+- PostGIS 적용 가능 아키텍처
 
-Designed for real-world MaaS & DRT optimization.
+---
+
+## 📌 프로젝트 목적
+
+- 모빌리티 서비스 운영 최적화 지원
+- DRT 배차 및 노선 분석 기반 구축
+- 통행 패턴(O/D) 분석을 통한 수요 밀집 지역 도출
+- 교통 안전 및 위험 구간 분석 기반 데이터 정합
+
+---
+
+## ⚙️ 주요 기능
+
+### 1. GPS 데이터 전처리
+- 이상치 제거
+- 속도/방향 기반 필터링
+- 궤적 정제
+
+### 2. 공간 인덱싱 기반 매칭
+- R-tree 또는 유사 구조 활용
+- 후보 링크 탐색 최적화
+
+### 3. 링크 단위 매칭 로직
+- 거리 기반 후보 선정
+- 방향성 검증
+- 연속성 기반 보정
+
+### 4. 결과 검증 및 시각화
+- O/D 패턴 추출
+- QGIS 연계 출력
+- 링크별 통행량 집계
+
+---
+
+## 🏗 시스템 흐름
+
+1. 원시 GPS 데이터 입력  
+2. 데이터 정제 및 전처리  
+3. 공간 인덱스 구축  
+4. 링크 매칭 수행  
+5. 검증 및 결과 출력  
+
+---
+
+## 📊 실무 활용 가능성
+
+본 프로젝트는 다음 역량을 증명합니다:
+
+- 대규모 모빌리티 데이터 처리 능력
+- 재현 가능한 공간 데이터 파이프라인 설계
+- 교통공학 기반 알고리즘 설계 능력
+- MaaS 및 DRT 운영 의사결정 지원 가능성
 
 ## 🎯 프로젝트 개요 / Project Overview
 ### 연구 배경 / Research Background
