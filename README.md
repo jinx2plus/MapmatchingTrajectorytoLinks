@@ -4,6 +4,17 @@
 이 저장소는 한국******공단 의뢰 하에 **화물차 연속 운전 데이터**를 이용해 졸음쉼터 배치의 효과를 정량적으로 분석한 연구 관련 맵매칭 코드입니다. 
 This repository contains a data-processing and map-matching pipeline for evaluating rest-area effectiveness using truck continuous-driving records.
 
+# Mobility Map-Matching Engine
+Production-oriented GPS-to-Link Map-Matching pipeline for large-scale mobility datasets.
+
+## What You Can Evaluate in 60 Seconds
+- Scalable spatial processing workflow
+- PostGIS-ready structure
+- Algorithmic design for trajectory-link matching
+- Mobility domain-specific validation logic
+
+Designed for real-world MaaS & DRT optimization.
+
 ## 🎯 프로젝트 개요 / Project Overview
 ### 연구 배경 / Research Background
 졸음쉼터의 배치와 이용성이 연속 운전시간 초과를 줄이는 데 미치는 효과를 DTG(기록계) 데이터를 기반으로 평가합니다.
@@ -157,4 +168,4 @@ Shown below is a summary from `final_merged_gdf2시간이상_방향추가251212.
 - Large-data assets should remain under `data/` or `tools/` and be excluded from Git history when possible.
 
 ## 🙏 Acknowledgement
-This work was supported by the Korea Transportation Safety Authority (KOSAT) under the Ministry of Land, Infrastructure and Transport of the Republic of Korea.
+This work was supported by the Korea Transportation Safety government agency under the Ministry of Land, Infrastructure and Transport of the Republic of Korea.
