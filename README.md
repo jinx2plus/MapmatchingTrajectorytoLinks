@@ -1,10 +1,8 @@
 ﻿# A Study on the Effectiveness of Rest Areas Using Continuous Driving Time
 # 대용량 모빌리티 데이터용 맵매칭 엔진: 연속 운전시간 기반 졸음쉼터 효과성 분석
 
-이 저장소는 한국******공단 의뢰 하에 **화물차 연속 운전 데이터**를 이용해 졸음쉼터 배치의 효과를 정량적으로 분석한 연구 관련 맵매칭 코드입니다. 본 레포지토리는 대규모 GPS 궤적 데이터를 표준 노드-링크 체계에 정합하는  
-실무 지향적 맵매칭(Map-Matching) 파이프라인을 구현한 프로젝트입니다.
-공공 MaaS, DRT(수요응답형 교통), 교통 분석 플랫폼에 적용 가능한  
-확장형 공간 데이터 처리 구조를 목표로 설계되었습니다.
+이 저장소는 한국******공단 의뢰 하에 **화물차 연속 운전 데이터**를 이용해 졸음쉼터 배치의 효과를 정량적으로 분석한 연구 관련 맵매칭 코드입니다. 본 레포지토리는 대규모 GPS 궤적 데이터를 표준 노드-링크 체계에 정합하는 실무 지향적 맵매칭(Map-Matching) 파이프라인을 구현한 프로젝트입니다.
+공공 MaaS, DRT(수요응답형 교통), 교통 분석 플랫폼에 적용 가능한 확장형 공간 데이터 처리 구조를 목표로 설계되었습니다.
 This repository contains a data-processing and map-matching pipeline for evaluating rest-area effectiveness using truck continuous-driving records.
 
 ## 🚀 60초 안에 확인할 수 있는 핵심 역량
